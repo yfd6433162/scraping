@@ -1,0 +1,8 @@
+*~
+*.png
+*.pdf
+cron.txt
+life.txt
+__pycache__
+Line.log
+LineConfig.py
