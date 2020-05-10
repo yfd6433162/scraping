@@ -14,32 +14,88 @@ CHROME_DRIVER = '/usr/bin/chromedriver'
 line_notify_token = LineConfig.LINE_NOTIFY_TOKEN_TEST
 line_notify_api = "https://notify-api.line.me/api/notify"
 
-headers = {
+request_headers = {
   "User-Agent" : "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36"
 }
 
-dic = {
-  "Color" : "https://www.amazon.co.jp/dp/B07WXL5YPW",
-  "Black" : "https://www.amazon.co.jp/dp/B07WS7BZYF",
-  "Animal" : "https://www.amazon.co.jp/dp/B084HPMVNN",
-  # "Test" : "https://www.amazon.co.jp/dp/B07SR8MMSL",
-}
+def AmazonChecker(dic):
+  line_str = "Amazon\n"
+  for key, url in dic.items():
+    # print(url)
+    r = requests.get(url, headers = request_headers)
+    html = r.text
+    soup = BeautifulSoup(html, 'html.parser')
+    merchant = soup.find(id="merchant-info")
+    if "Amazon.co.jp が販売" in merchant.text:
+      line_str += key + ": "
+      line_str += url + "\n"
+      line_str += "在庫あり\n"
+  # print(line_str)
 
-line_str = "Amazon\n"
+  if "在庫あり" in line_str:
+    payload = {"Message": line_str}  #メッセージの本文
+    headers = {"Authorization":"Bearer " + line_notify_token}
+    line_notify = requests.post(line_notify_api, data = payload, headers = headers)
 
-for key, url in dic.items():
-  # print(url)
-  r = requests.get(url, headers = headers)
-  html = r.text
-  soup = BeautifulSoup(html, 'html.parser')
-  merchant = soup.find(id="merchant-info")
-  if "Amazon.co.jp" in merchant.text:
-    line_str += key + ": "
-    line_str += url + "\n"
-    line_str += str("Amazon.co.jp" in merchant.text) + "\n"
-# print(line_str)
+def NintenAtsumoriChecker(dic):
+  line_str = "Nintendo\n"
+  for key, url in dic.items():
+    r = requests.get(url, headers = request_headers)
+    html = r.text
+    soup = BeautifulSoup(html, 'html.parser')
+    item = soup.find(class_="item-cart-add-area")
+    try:
+      if "カートに追加する" in str(item):
+        line_str += key + ": "
+        line_str += url + "\n"
+        line_str += "在庫あり\n"
+    except Exception as e:
+      print(e)
+  # print(line_str)
 
-if "True" in line_str:
-  payload = {"Message": line_str}  #メッセージの本文
-  headers = {"Authorization":"Bearer " + line_notify_token}
-  line_notify = requests.post(line_notify_api, data = payload, headers = headers)
+  if "在庫あり" in line_str:
+    payload = {"Message": line_str}  #メッセージの本文
+    headers = {"Authorization":"Bearer " + line_notify_token}
+    line_notify = requests.post(line_notify_api, data = payload, headers = headers)
+
+def NintenSwitchChecker(dic):
+  line_str = "Nintendo\n"
+  for key, url in dic.items():
+    r = requests.get(url, headers = request_headers)
+    html = r.text
+    soup = BeautifulSoup(html, 'html.parser')
+    item = soup.find(id="custoize_toCart")
+    try:
+      if not "準備中" in str(item):
+        line_str += key + ": "
+        line_str += url + "\n"
+        line_str += "在庫あり\n"
+    except Exception as e:
+      print(e)
+  # print(line_str)
+
+  if "在庫あり" in line_str:
+    payload = {"Message": line_str}  #メッセージの本文
+    headers = {"Authorization":"Bearer " + line_notify_token}
+    line_notify = requests.post(line_notify_api, data = payload, headers = headers)
+
+if __name__ == '__main__':
+  dic = {
+    "Color" : "https://www.amazon.co.jp/dp/B07WXL5YPW",
+    "Black" : "https://www.amazon.co.jp/dp/B07WS7BZYF",
+    "Animal" : "https://www.amazon.co.jp/dp/B084HPMVNN",
+    # "Test" : "https://www.amazon.co.jp/dp/B07SR8MMSL",
+  }
+  AmazonChecker(dic)
+
+  dic = {
+    "Animal" : "https://store.nintendo.co.jp/item/HAD_S_KEAGC.html",
+    # "Test" : "https://store.nintendo.co.jp/item/HAC_J_AUBQACF1.html",
+  }
+  NintenAtsumoriChecker(dic)
+
+  dic = {
+    "Custom" : "https://store.nintendo.co.jp/item/HAD_S_KAYAA.html",
+    "2daime" : "https://store.nintendo.co.jp/item/HAD_9_KAZAB.html",
+  }
+  NintenSwitchChecker(dic)
