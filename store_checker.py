@@ -79,17 +79,41 @@ def NintenSwitchChecker(dic):
     headers = {"Authorization":"Bearer " + line_notify_token}
     line_notify = requests.post(line_notify_api, data = payload, headers = headers)
 
+def RakutenChecker(dic):
+  line_str = "Rakuten\n"
+  for key, url in dic.items():
+    r = requests.get(url, headers = request_headers)
+    html = r.text
+    soup = BeautifulSoup(html, 'html.parser')
+    item = soup.find(class_="status-heading")
+    try:
+      if not "ご注文できない商品" in str(item):
+        line_str += key + ": "
+        line_str += url + "\n"
+        line_str += "在庫あり\n"
+    except Exception as e:
+      print(e)
+  # print(line_str)
+
+  if "在庫あり" in line_str:
+    payload = {"Message": line_str}  #メッセージの本文
+    headers = {"Authorization":"Bearer " + line_notify_token}
+    line_notify = requests.post(line_notify_api, data = payload, headers = headers)
+
 if __name__ == '__main__':
   dic = {
     "Color" : "https://www.amazon.co.jp/dp/B07WXL5YPW",
     "Black" : "https://www.amazon.co.jp/dp/B07WS7BZYF",
     "Animal" : "https://www.amazon.co.jp/dp/B084HPMVNN",
+    "Ring" : "https://www.amazon.co.jp/dp/B0861F1JX1",
     # "Test" : "https://www.amazon.co.jp/dp/B07SR8MMSL",
   }
   AmazonChecker(dic)
 
   dic = {
     "Animal" : "https://store.nintendo.co.jp/item/HAD_S_KEAGC.html",
+    "Ring" : "https://store.nintendo.co.jp/item/HAC_R_AL3PA.html",
+    "Ring_Download" : "https://store.nintendo.co.jp/item/HAC_Q_AL3PA.html",
     # "Test" : "https://store.nintendo.co.jp/item/HAC_J_AUBQACF1.html",
   }
   NintenAtsumoriChecker(dic)
@@ -99,3 +123,12 @@ if __name__ == '__main__':
     "2daime" : "https://store.nintendo.co.jp/item/HAD_9_KAZAB.html",
   }
   NintenSwitchChecker(dic)
+
+  dic = {
+    # "Test" : "https://books.rakuten.co.jp/rb/14647226/",
+    "Color" : "https://books.rakuten.co.jp/rb/16033028/",
+    "Black" : "https://books.rakuten.co.jp/rb/16033027/",
+    "Animal" : "https://books.rakuten.co.jp/rb/16247994/",
+    "Ring" : "https://books.rakuten.co.jp/rb/16057071/",
+  }
+  RakutenChecker(dic)
