@@ -12,11 +12,12 @@ import datetime
 import os
 from bs4 import BeautifulSoup
 import LineConfig
+import time
 
 CHROME_BIN = "/usr/bin/chromium-browser"
 CHROME_DRIVER = '/usr/bin/chromedriver'
-line_notify_token = LineConfig.LINE_NOTIFY_TOKEN
-# line_notify_token = LineConfig.LINE_NOTIFY_TOKEN_TEST
+# line_notify_token = LineConfig.LINE_NOTIFY_TOKEN
+line_notify_token = LineConfig.LINE_NOTIFY_TOKEN_TEST
 line_notify_api = "https://notify-api.line.me/api/notify"
 life_addr = "http://www.lifecorp.jp/store/syuto/855.html"
 
@@ -40,13 +41,13 @@ def LifeMessage():
         os.system("rm -f /home/pi6433162/Documents/Line/chirashi.pdf")
         os.system("rm -f /home/pi6433162/Documents/Line/chirashi-1.png")
         os.system("rm -f /home/pi6433162/Documents/Line/chirashi-2.png")
-        sleep(3)
+        time.sleep(3)
         href = browser.find_elements_by_class_name('shufoo-pdf')[0].\
                        find_elements_by_tag_name('a')[0].get_attribute("href")
         browser.get(href)
-        sleep(7)
+        time.sleep(7)
         os.system("pdftoppm /home/pi6433162/Documents/Line/chirashi.pdf -png /home/pi6433162/Documents/Line/chirashi")
-        sleep(7)
+        time.sleep(7)
 
         message = "【Life 更新】" + message
         # message = message + "http://www.lifecorp.jp/store/syuto/855.html\n"

@@ -15,8 +15,8 @@ import LineConfig
 
 CHROME_BIN = "/usr/bin/chromium-browser"
 CHROME_DRIVER = '/usr/bin/chromedriver'
-line_notify_token = LineConfig.LINE_NOTIFY_TOKEN
-# line_notify_token = LineConfig.LINE_NOTIFY_TOKEN_TEST
+# line_notify_token = LineConfig.LINE_NOTIFY_TOKEN
+line_notify_token = LineConfig.LINE_NOTIFY_TOKEN_TEST
 line_notify_api = "https://notify-api.line.me/api/notify"
 odakyu_addr = "https://www.odakyu.jp/cgi-bin/user/emg/emergency_bbs.pl"
 

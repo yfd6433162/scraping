@@ -102,33 +102,36 @@ def RakutenChecker(dic):
 
 if __name__ == '__main__':
   dic = {
-    "Color" : "https://www.amazon.co.jp/dp/B07WXL5YPW",
-    "Black" : "https://www.amazon.co.jp/dp/B07WS7BZYF",
-    "Animal" : "https://www.amazon.co.jp/dp/B084HPMVNN",
-    "Ring" : "https://www.amazon.co.jp/dp/B0861F1JX1",
-    # "Test" : "https://www.amazon.co.jp/dp/B07SR8MMSL",
+    # "Color" : "https://www.amazon.co.jp/dp/B07WXL5YPW",
+    # "Black" : "https://www.amazon.co.jp/dp/B07WS7BZYF",
+    # "Animal" : "https://www.amazon.co.jp/dp/B084HPMVNN",
+    # "Ring" : "https://www.amazon.co.jp/dp/B0861F1JX1",
+    "PS5" : "https://www.amazon.co.jp/dp/B08GGGBKRQ",
+    "PS5 Dig" : "https://www.amazon.co.jp/dp/B08GGGCH3Y",
+    # "Test" : "https://www.amazon.co.jp/dp/B08GG1QSRR",
   }
   AmazonChecker(dic)
 
   dic = {
     "Animal" : "https://store.nintendo.co.jp/item/HAD_S_KEAGC.html",
     "Ring" : "https://store.nintendo.co.jp/item/HAC_R_AL3PA.html",
-    "Ring_Download" : "https://store.nintendo.co.jp/item/HAC_Q_AL3PA.html",
+    # "Ring_Download" : "https://store.nintendo.co.jp/item/HAC_Q_AL3PA.html",
     # "Test" : "https://store.nintendo.co.jp/item/HAC_J_AUBQACF1.html",
   }
-  NintenAtsumoriChecker(dic)
+  # NintenAtsumoriChecker(dic)
 
   dic = {
     "Custom" : "https://store.nintendo.co.jp/item/HAD_S_KAYAA.html",
     "2daime" : "https://store.nintendo.co.jp/item/HAD_9_KAZAB.html",
   }
-  NintenSwitchChecker(dic)
+  # NintenSwitchChecker(dic)
 
   dic = {
     # "Test" : "https://books.rakuten.co.jp/rb/14647226/",
-    "Color" : "https://books.rakuten.co.jp/rb/16033028/",
-    "Black" : "https://books.rakuten.co.jp/rb/16033027/",
-    "Animal" : "https://books.rakuten.co.jp/rb/16247994/",
-    "Ring" : "https://books.rakuten.co.jp/rb/16057071/",
+    "PS5" : "https://books.rakuten.co.jp/rb/16462859/",
+    # "Color" : "https://books.rakuten.co.jp/rb/16033028/",
+    # "Black" : "https://books.rakuten.co.jp/rb/16033027/",
+    # "Animal" : "https://books.rakuten.co.jp/rb/16247994/",
+    # "Ring" : "https://books.rakuten.co.jp/rb/16057071/",
   }
   RakutenChecker(dic)

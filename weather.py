@@ -15,8 +15,8 @@ import LineConfig
 
 CHROME_BIN = "/usr/bin/chromium-browser"
 CHROME_DRIVER = '/usr/bin/chromedriver'
-line_notify_token = LineConfig.LINE_NOTIFY_TOKEN
-# line_notify_token = LineConfig.LINE_NOTIFY_TOKEN_TEST
+# line_notify_token = LineConfig.LINE_NOTIFY_TOKEN
+line_notify_token = LineConfig.LINE_NOTIFY_TOKEN_TEST
 line_notify_api = "https://notify-api.line.me/api/notify"
 weather_addr = "https://tenki.jp/forecast/3/17/"
 
@@ -37,8 +37,8 @@ def WeatherMessage():
 
     dt_now = datetime.datetime.now()
     message = "【神奈川 天気情報】"
-    message = message + "\n" + dt_now.strftime('%Y/%m/%d %H:%M')
-    message = message + "\n" + soup.find('div', {'class': 'forecast-comment'}).get_text(strip=True)
+    # message = message + "\n" + dt_now.strftime('%Y/%m/%d %H:%M')
+    # message = message + "\n" + soup.find('div', {'class': 'forecast-comment'}).get_text(strip=True)
 
     payload = {"message":message}  #メッセージの本文
     headers = {"Authorization":"Bearer " + line_notify_token}

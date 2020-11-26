@@ -8,5 +8,5 @@ import weather
 if __name__ == "__main__":
     train.TrainMessage()
     weather.WeatherMessage()
-    life.LifeMessage()
+    # life.LifeMessage()
     print("Successful")
